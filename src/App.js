@@ -24,7 +24,7 @@ function App() {
     days: 10,
     hours: 23,
     minutes: 45,
-    seconds: 12
+    seconds: 5
   };
   const [state, setState] = React.useState(input);
   const classes = useStyles();
@@ -35,20 +35,24 @@ function App() {
     if (state.seconds === 0) {
       handleState("seconds", 60);
       handleState("minutes", state.minutes - 1);
+      // console.log("minute changed");
     } else if (state.minutes === 0) {
       handleState("minutes", 60);
       handleState("hours", state.hours - 1);
+      // console.log("hours changed");
     } else if (state.hours === 0) {
       handleState("hours", 24);
       handleState("days", state.days - 1);
+      // console.log("days changed");
     }
   };
   const decreaseTime = element => {
     setTimeout(() => {
-      setState({
-        ...state,
-        [element]: state.seconds - 1
-      });
+      // setState({
+      //   ...state,
+      //   [element]: state.seconds - 1
+      // });
+      handleState("seconds", state.seconds - 1);
     }, 1000);
   };
   React.useEffect(() => {
@@ -61,6 +65,7 @@ function App() {
       container
       justify="center"
       alignItems="center"
+      direction="column"
       className={classes.root}
     >
       <Grid
@@ -96,7 +101,16 @@ function App() {
           </Typography>
         </Grid>
       </Grid>
-
+      <Grid
+        container
+        item
+        justify="center"
+        style={{ border: "1px solid white", width: "50%", padding: 40 }}
+      >
+        <Typography align="center" className={classes.texts}>
+          {`${state.hours}:${state.minutes}:${state.seconds}`}
+        </Typography>
+      </Grid>
       {/* <Typography>{`${state.days} ${state.hours} ${state.minutes} ${state.seconds}`}</Typography> */}
       {/* {state.hours} {state.minutes} {state.seconds} */}
       {/* <button onClick={() => console.log(state)}>show state</button> */}
